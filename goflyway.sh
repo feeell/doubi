@@ -63,7 +63,7 @@ check_crontab_installed_status(){
 	fi
 }
 check_pid(){
-	PID=$(ps -ef| grep "goflyway"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}')
+	PID=$(ps -ef| grep "goflyway"| grep -v grep | grep -v "init.d"| grep -v "service"| awk '{print $2}')
 }
 check_new_ver(){
 	new_ver=$(wget -qO- "https://github.com/coyove/goflyway/tags"|grep "/goflyway/releases/tag/"|grep -v '\-apk'|head -n 1|awk -F "/tag/" '{print $2}'|sed 's/\">//')
@@ -293,9 +293,7 @@ Stop_goflyway(){
 Restart_goflyway(){
 	check_installed_status
 	check_pid
-	[[ ! -z ${PID} ]] && /etc/init.d/goflyway stop
-	/etc/init.d/goflyway start
-	sleep 1s
+	[[ ! -z ${PID} ]] && /etc/init.d/goflyway restart
 	check_pid
 	[[ ! -z ${PID} ]] && View_goflyway
 }
